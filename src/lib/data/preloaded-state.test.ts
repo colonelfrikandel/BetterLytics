@@ -34,6 +34,21 @@ function serialize(state: unknown) {
 }
 
 describe('extractBuildDocument', () => {
+  it('accepts a community document without the featured query key', () => {
+    const query = { ...documentQuery(DOC), queryKey: ['community-guide', 'nicktew', 'build'] };
+    expect(extractBuildDocument(pageHtml(serialize(stateWith([BANNER_QUERY, query]))))).toEqual({ ok: true, doc: DOC });
+  });
+
+  it('accepts an individual document lookup by ID with an unwrapped result', () => {
+    const query = { queryKey: ['community-guide'], state: { data: { game: { documents: { userGeneratedDocumentById: { data: DOC } } } } } };
+    expect(extractBuildDocument(pageHtml(serialize(stateWith([query]))))).toEqual({ ok: true, doc: DOC });
+  });
+
+  it('skips lists and null documents before the actual guide', () => {
+    const list = { state: { data: [{ game: { documents: { userGeneratedDocuments: { data: [DOC] } } } }] } };
+    expect(extractBuildDocument(pageHtml(serialize(stateWith([list, documentQuery(null), documentQuery(DOC)]))))).toEqual({ ok: true, doc: DOC });
+    expect(extractBuildDocument(pageHtml(serialize(stateWith([list]))))).toMatchObject({ ok: false });
+  });
   it('finds the build document in page HTML', () => {
     const html = pageHtml(serialize(stateWith([BANNER_QUERY, documentQuery(DOC)])));
 

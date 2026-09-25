@@ -35,6 +35,16 @@ function setup(overrides: Partial<Parameters<typeof createBuildLoader>[0]> = {})
 }
 
 describe('createBuildLoader', () => {
+  it('loads a profile guide and fetches again for another author with the same build slug', async () => {
+    const url = 'https://mobalytics.gg/poe-2/profile/nicktew/builds/0-cost-coc-gemling-wip-turd';
+    const html = pageHtml('Community Guide').replace('ngf-ug-featured-document-page', 'community-guide');
+    const { deps, load } = setup({ initialUrl: url, initialDocument: parse(html) });
+    expect(await load(url)).toMatchObject({ ok: true, build: { title: 'Community Guide' } });
+    expect(deps.fetchHtml).not.toHaveBeenCalled();
+    const otherAuthor = url.replace('/nicktew/', '/another-author/');
+    expect(await load(otherAuthor)).toMatchObject({ ok: true, build: { title: 'Build B' } });
+    expect(deps.fetchHtml).toHaveBeenCalledWith(otherAuthor, undefined);
+  });
   it('passes on how the fetch is going, so the guide can show progress', async () => {
     const fetchHtml = vi.fn(async (_url: string, onProgress?: (progress: { attempt: number; attempts: number }) => void) => {
       onProgress?.({ attempt: 2, attempts: 4 });

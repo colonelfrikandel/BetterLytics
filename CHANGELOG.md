@@ -47,3 +47,8 @@
 
 First public release: a clean tabbed view of PoE 2 build guides on mobalytics.gg — Overview, Skills, Gear, Passives,
 Atlas Tree and Progression.
+# 1.2.1 — BetterLytics community builds
+
+- Activate on `/poe-2/profile/<author>/builds/<build>` pages.
+- Read individual guide documents independently of the featured-page query key.
+- Keep saved preferences separate for different authors' community builds.

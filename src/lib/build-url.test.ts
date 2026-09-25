@@ -5,6 +5,20 @@ const SAMPLE =
   'https://mobalytics.gg/poe-2/builds/chaos-dot-lich-starter-deadrabbit?weaponSet=set1&ws-ngf5-f7d82102-7e77-4a44-ad24-33b67e8ae7bf=activeVariantId%2Cdefault-variant#4b46748c-2c9b-4cb5-b49e-7d4dddb609b6-equipment-4';
 
 describe('getBuildSlug', () => {
+  it('recognizes NickTew community builds and ignores variant queries and hashes', () => {
+    const path = 'profile/nicktew/builds/0-cost-coc-gemling-wip-turd';
+    expect(getBuildSlug(`https://mobalytics.gg/poe-2/${path}?variant=budget#skills`)).toBe(path);
+    expect(getBuildSlug(`https://www.mobalytics.gg/poe-2/${path}/`)).toBe(path);
+  });
+
+  it('keeps authors and featured builds with identical slugs distinct', () => {
+    const urls = ['builds/example', 'profile/alice/builds/example', 'profile/bob/builds/example'];
+    expect(new Set(urls.map((path) => getBuildSlug(`https://mobalytics.gg/poe-2/${path}`))).size).toBe(3);
+  });
+
+  it.each(['profile/nicktew', 'profile/nicktew/builds', 'profile/nicktew/builds/example/edit', 'profile//builds/example'])('ignores non-guide profile paths: %s', (path) => {
+    expect(getBuildSlug(`https://mobalytics.gg/poe-2/${path}`)).toBeNull();
+  });
   it.each([
     ['https://mobalytics.gg/poe-2/builds/chaos-dot-lich-starter-deadrabbit', 'chaos-dot-lich-starter-deadrabbit'],
     ['https://mobalytics.gg/poe-2/builds/chaos-dot-lich-starter-deadrabbit/', 'chaos-dot-lich-starter-deadrabbit'],

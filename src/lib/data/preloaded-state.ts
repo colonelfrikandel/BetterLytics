@@ -7,7 +7,6 @@ export type ExtractResult =
   | { ok: false; error: { code: ExtractErrorCode; message: string } };
 
 const STATE_PREFIX = 'window.__PRELOADED_STATE__=';
-const DOCUMENT_QUERY_KEY = 'ngf-ug-featured-document-page';
 
 /**
  * Reads the build guide document from the site's server-rendered state script.
@@ -47,13 +46,20 @@ function findBuildDocument(state: unknown): RawBuildDocument | null {
   const queries = get(state, 'poe2State', 'apollo', 'graphqlV2', 'queries');
   if (!Array.isArray(queries)) return null;
 
-  const query = queries.find((q) => Array.isArray(get(q, 'queryKey')) && get(q, 'queryKey', 0) === DOCUMENT_QUERY_KEY);
-  const results = get(query, 'state', 'data');
-  if (!Array.isArray(results)) return null;
-
-  for (const result of results) {
-    const doc = get(result, 'game', 'documents', 'userGeneratedDocumentBySlug', 'data');
-    if (isBuildDocument(doc)) return doc;
+  // Profile and featured guides have different query keys. Read individual
+  // document results by schema, without selecting lists of recommended builds.
+  for (const query of queries) {
+    const data = get(query, 'state', 'data');
+    const results = Array.isArray(data) ? data : [data];
+    for (const result of results) {
+      const documents = get(result, 'game', 'documents');
+      if (!documents || typeof documents !== 'object') continue;
+      for (const [key, value] of Object.entries(documents)) {
+        if (!key.startsWith('userGeneratedDocument')) continue;
+        const doc = get(value, 'data');
+        if (isBuildDocument(doc)) return doc;
+      }
+    }
   }
   return null;
 }

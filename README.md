@@ -30,7 +30,7 @@ tooltips for everything.
 4. Open or reload a [Mobalytics PoE 2 build](https://mobalytics.gg/poe-2/builds).
 
 Temporary installation lasts until Firefox closes. For permanent installation in standard Firefox,
-submit `.output/betterlytics-1.2.0-firefox.zip` to [Mozilla Add-on Developer Hub](https://addons.mozilla.org/developers/)
+submit `.output/betterlytics-1.2.1-firefox.zip` to [Mozilla Add-on Developer Hub](https://addons.mozilla.org/developers/)
 and choose **On your own** for an unlisted, signed extension. Install the signed `.xpi` returned by Mozilla
 through `about:addons` → gear menu → **Install Add-on From File…**. Renaming an unsigned ZIP to XPI does not sign it.
 See [Mozilla's signing guide](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/).
