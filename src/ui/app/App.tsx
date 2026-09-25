@@ -45,7 +45,7 @@ export function App({
 
   if (state.status === 'ready') {
     return (
-      <div class="overlay" role="dialog" aria-label="poe2perfect">
+      <div class="overlay" role="dialog" aria-label="BetterLytics">
         <BuildView
           key={state.build.id}
           build={state.build}
@@ -67,9 +67,9 @@ export function App({
   }
 
   return (
-    <div class="overlay" role="dialog" aria-label="poe2perfect">
+    <div class="overlay" role="dialog" aria-label="BetterLytics">
       <div class="overlay__bar">
-        <span class="overlay__brand">poe2perfect</span>
+        <span class="overlay__brand">BetterLytics</span>
         <button type="button" class="icon-button" aria-label="Show original page" title="Show original page" onClick={() => onModeChange('original')}>
           <LogOut size={16} aria-hidden="true" />
         </button>

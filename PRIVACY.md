@@ -1,8 +1,8 @@
-# poe2perfect — Privacy Policy
+# BetterLytics — Privacy Policy
 
 _Last updated: September 19, 2026_
 
-poe2perfect is a browser extension that shows Path of Exile 2 build guides from mobalytics.gg in a tabbed layout.
+BetterLytics is a browser extension that shows Path of Exile 2 build guides from mobalytics.gg in a tabbed layout.
 
 ## What the extension does with data
 
@@ -31,4 +31,4 @@ Removing the extension from Chrome deletes its stored preferences.
 
 Questions about this policy: open an issue at https://github.com/ReSenpai/poe2perfect/issues.
 
-poe2perfect is an unofficial fan project, not affiliated with Mobalytics or Grinding Gear Games.
+BetterLytics is an unofficial fan project, not affiliated with Mobalytics or Grinding Gear Games.

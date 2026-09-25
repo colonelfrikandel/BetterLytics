@@ -1,11 +1,13 @@
-# poe2perfect
+# BetterLytics
+
+Firefox edition of [poe2perfect](https://github.com/ReSenpai/poe2perfect), renamed with its own icon.
+Requires Firefox 140 or newer, including the latest desktop release.
 
 **A better way to read Path of Exile 2 builds on Mobalytics.**
 
 One click turns a long build page into tabs: skills, gear, passives and progression each fit on one screen, with game
 tooltips for everything.
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/iaalfjcbfnidaiogadcgcdcfgmekpnce?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/poe2perfect/iaalfjcbfnidaiogadcgcdcfgmekpnce)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 ![A Mobalytics build page, then the same build in poe2perfect](docs/images/demo.gif)
@@ -22,9 +24,18 @@ tooltips for everything.
 
 ## Installation
 
-**[Add poe2perfect to Chrome](https://chromewebstore.google.com/detail/poe2perfect/iaalfjcbfnidaiogadcgcdcfgmekpnce)**,
-then open any PoE 2 build on [mobalytics.gg](https://mobalytics.gg/poe-2/builds). It works whether or not you are
-signed in to the site.
+1. Run `npm ci` and `npm run zip` (or use the already generated `.output` folder).
+2. In Firefox, open `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on…**, then select `.output/firefox-mv3/manifest.json`.
+4. Open or reload a [Mobalytics PoE 2 build](https://mobalytics.gg/poe-2/builds).
+
+Temporary installation lasts until Firefox closes. For permanent installation in standard Firefox,
+submit `.output/betterlytics-1.2.0-firefox.zip` to [Mozilla Add-on Developer Hub](https://addons.mozilla.org/developers/)
+and choose **On your own** for an unlisted, signed extension. Install the signed `.xpi` returned by Mozilla
+through `about:addons` → gear menu → **Install Add-on From File…**. Renaming an unsigned ZIP to XPI does not sign it.
+See [Mozilla's signing guide](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/).
+
+BetterLytics changes how guides are displayed; it does not edit or publish the author's saved Mobalytics builds.
 
 ## Features
 
@@ -70,7 +81,7 @@ you were reading helps a lot.
 
 ## ☕ Support the project
 
-poe2perfect is a free, open-source Chrome extension. It is licensed under GPL-3.0 and costs nothing to use.
+BetterLytics is a free, open-source Firefox extension based on poe2perfect. It is licensed under GPL-3.0 and costs nothing to use.
 
 If the extension turned out useful and you would like to support further development, you can donate voluntarily:
 
@@ -93,7 +104,7 @@ Games; build guides and game data come from mobalytics.gg at run time and belong
 
 ## License
 
-poe2perfect is free software, released under the [GNU General Public License v3.0 or later](LICENSE).
+BetterLytics is free software, released under the [GNU General Public License v3.0 or later](LICENSE).
 You may use, study, share and change it; if you distribute a modified version, it must stay under the GPL with its
 source code available. Copyright (C) 2026 ReSenpai.
 
@@ -109,15 +120,14 @@ under the GPL like the rest of the project. Changes between versions are listed 
 
 ```sh
 npm install
-npm run dev        # dev build in .output/chrome-mv3-dev (load it unpacked; reloads on save)
+npm run dev        # dev build in .output/firefox-mv3-dev (load temporarily; reloads on save)
 npm test           # Vitest
 npm run typecheck
-npm run build      # production build in .output/chrome-mv3
-npm run zip        # .output/poe2perfect-<version>-chrome.zip
+npm run build      # production build in .output/firefox-mv3
+npm run zip        # .output/betterlytics-<version>-firefox.zip
 ```
 
-To try a build without the store, open `chrome://extensions`, turn on **Developer mode**, click **Load unpacked** and
-pick the folder with `manifest.json`.
+Load a development or production build using Firefox's **Load Temporary Add-on…** and select its `manifest.json`.
 
 Stack: WXT, Preact, TypeScript, Vitest with happy-dom. The plan and findings about the site's data live in
 `docs/PLAN.md`; the design system in `reference/DESIGN.md`. Icons are generated into `public/icon/`.

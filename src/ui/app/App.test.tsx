@@ -45,8 +45,8 @@ describe('App', () => {
   it('covers the page with a loading overlay', () => {
     const { onModeChange } = renderApp({ ...base, mode: 'extension', status: 'loading' });
 
-    expect(screen.getByRole('dialog', { name: 'poe2perfect' })).toBeTruthy();
-    expect(screen.getByText('poe2perfect', { selector: '.overlay__brand' })).toBeTruthy();
+    expect(screen.getByRole('dialog', { name: 'BetterLytics' })).toBeTruthy();
+    expect(screen.getByText('BetterLytics', { selector: '.overlay__brand' })).toBeTruthy();
     expect(screen.getByRole('status').textContent).toBe('Loading build…');
     expect(screen.getByRole('status').querySelector('.spinner[aria-hidden="true"]')).not.toBeNull();
 
